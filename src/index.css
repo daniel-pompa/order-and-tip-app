@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Poppins source definition */
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/Poppins-ExtraBold.woff2') format('woff2'),
+    url('./assets/Poppins-ExtraBold.woff') format('woff'),
+    url('./assets/Poppins-ExtraBold.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Root Styles with Variables */
+:root {
+  /* Fallback Font Stack */
+  --font-fallback: Inter, system-ui, Arial, sans-serif;
+
+  /* Font Settings */
+  --font-family-header: 'Poppins', var(--font-fallback);
+}
+
+/* Global Styles */
+html {
+  font-size: 62.5%;
+}
+
+h1,
+h2 {
+  font-family: var(--font-family-header);
+}
