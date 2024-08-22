@@ -109,17 +109,85 @@ npm run dev
 
 ## Hooks
 
-<!-- TODO: Add a detailed description and example usage of the `useOrder` Hook.  -->
+`useOrder` is a custom Hook to manage an order list by adding menu items, updating quantities, and maintaining the current state of the order.
+
+```ts
+import { useState } from 'react';
+import type { MenuItemType, OrderItemType } from '../types';
+
+export const useOrder = () => {
+  const [order, setOrder] = useState<OrderItemType[]>([]);
+
+  const addItem = (item: MenuItemType) => {
+    const itemExist = order.find(orderItem => orderItem.id === item.id);
+    if (itemExist) {
+      const updatedOrder = order.map(orderItem =>
+        orderItem.id === item.id
+          ? { ...orderItem, quantity: orderItem.quantity + 1 }
+          : orderItem
+      );
+      setOrder(updatedOrder);
+    } else {
+      const menuItem = { ...item, quantity: 1 };
+      setOrder([...order, menuItem]);
+    }
+  };
+
+  return {
+    addItem,
+  };
+};
+```
+
+### Example
+
+```ts
+import { useOrder } from './hooks/useOrder';
+import type { MenuItemType } from './types';
+
+const MenuItemComponent = () => {
+  const { addItem } = useOrder();
+
+  // Menu item example
+  const menuItem: MenuItemType = {
+    id: 1,
+    name: 'Pizza Margherita',
+    price: 12.99,
+  };
+
+  return (
+    <div>
+      <h1>{menuItem.name}</h1>
+      <p>Price: ${menuItem.price}</p>
+      <button onClick={() => addItem(menuItem)}>Add to order</button>
+    </div>
+  );
+};
+
+export default MenuItemComponent;
+```
 
 ## Usage
 
-Once the app is running, you can:
+Once the application is running, you can:
 
-- Browse the Menu: View available dishes with descriptions and prices.
-- Add Items to Your Order: Select items and specify quantities.
-- Calculate the Tip: Choose a tip percentage or enter a custom amount.
-- View Total Amount: See the total cost including the selected tip.
-- Checkout: Finalize your order and receive a summary of your total cost.
+- **Browse the menu:**  
+  View available dishes along with descriptions and prices. Explore all the options before placing your order.
+
+- **Add items to your order:**  
+  Select items from the menu that you want to order. Each time you click on a dish, it will be added to your order, or the quantity will be updated if you've already selected it.
+
+- **Remove items from your order:**  
+  If you change your mind, you can remove any dish from your order, allowing you to adjust your selection before confirming.
+
+- **Calculate the tip:**  
+  Choose a tip percentage to add to your total. This will be automatically included in your final bill.
+
+- **View total amount:**  
+  See the total cost of your order, including the selected tip.
+
+- **Save the order:**  
+  Once you're satisfied with your selection, you can save your order for later review or submission.
 
 ## Demo
 
