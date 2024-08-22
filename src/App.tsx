@@ -1,14 +1,15 @@
 import { menuItems } from './data/items';
 import { MenuItem } from './components/MenuItem';
 import { useOrder } from './hooks/useOrder';
+import { OrderSummary } from './components/OrderSummary';
 
 function App() {
-  const { addItem } = useOrder();
+  const { order, addItem } = useOrder();
 
   return (
     <>
       <header className='bg-teal-500 text-white text-center py-20 font-bold'>
-        <h1 className='text-2xl md:text-5xl lg:text-6xl uppercase'>
+        <h1 className='text-2xl md:text-4xl lg:text-5xl uppercase'>
           Calculadora de Pedidos y Propinas
         </h1>
       </header>
@@ -16,7 +17,7 @@ function App() {
       <main className='max-w-full mx-auto py-20 px-10 grid md:grid-cols-2'>
         {/* Menu */}
         <div className='flex flex-col'>
-          <h2 className='text-2xl md:text-5xl lg:text-6xl text-center text-teal-500 mt-5 mb-10'>
+          <h2 className='text-2xl md:text-4xl lg:text-5xl text-center text-teal-500 mt-5 mb-10'>
             Experiencia Gastronómica
           </h2>
           {/* Menu Items */}
@@ -28,10 +29,8 @@ function App() {
         </div>
 
         {/* Orders */}
-        <div className='md:ml-5 lg:ml-10'>
-          <h2 className='text-2xl md:text-5xl lg:text-6xl text-center text-teal-500 mt-5 mb-10'>
-            Detalles de Pedidos
-          </h2>
+        <div className='md:ml-5 lg:ml-10 px-5 shadow-md'>
+          <OrderSummary order={order} />
         </div>
       </main>
     </>
