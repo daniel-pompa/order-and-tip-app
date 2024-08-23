@@ -109,14 +109,23 @@ npm run dev
 
 ## Hooks
 
-`useOrder` is a custom Hook to manage an order list by adding menu items, updating quantities, and maintaining the current state of the order.
+<!-- TODO: Update description, and example -->
+`useOrder` is a custom Hook designed to manage an order list in a restaurant. It allows you to add items to an order, update the quantity of existing items, and manage the state of the order, including handling tips and submitting the order.
+
+### Features
+
+- **Add Items**: Add new items to the order or update the quantity if the item already exists.
+- **Remove Items**: Remove items from the order by their ID.
+- **Manage Tip**: Set and reset the tip associated with the order.
+- **Submit Order**: Simulate the submission of the order, resetting the order list and tip
 
 ```ts
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { MenuItemType, OrderItemType } from '../types';
 
 export const useOrder = () => {
   const [order, setOrder] = useState<OrderItemType[]>([]);
+  const [tip, setTip] = useState(0);
 
   const addItem = (item: MenuItemType) => {
     const itemExist = order.find(orderItem => orderItem.id === item.id);
@@ -133,8 +142,26 @@ export const useOrder = () => {
     }
   };
 
+  const removeItem = (id: MenuItemType['id']) => {
+    setOrder(order.filter(orderItem => orderItem.id !== id));
+  };
+
+  const submitOrder = () => {
+    setOrder([]);
+    setTip(0);
+  };
+
+  useEffect(() => {
+    if (order.length === 0) setTip(0);
+  }, [order]);
+
   return {
+    order,
+    tip,
+    setTip,
     addItem,
+    removeItem,
+    submitOrder,
   };
 };
 ```
@@ -142,29 +169,54 @@ export const useOrder = () => {
 ### Example
 
 ```ts
+import { menuItems } from './data/items';
+import { MenuItem, OrderSummary, OrderTotal, TipPercentageForm } from './components';
 import { useOrder } from './hooks/useOrder';
-import type { MenuItemType } from './types';
 
-const MenuItemComponent = () => {
-  const { addItem } = useOrder();
-
-  // Menu item example
-  const menuItem: MenuItemType = {
-    id: 1,
-    name: 'Pizza Margherita',
-    price: 12.99,
-  };
+function App() {
+  const { order, tip, setTip, addItem, removeItem, submitOrder } = useOrder();
 
   return (
-    <div>
-      <h1>{menuItem.name}</h1>
-      <p>Price: ${menuItem.price}</p>
-      <button onClick={() => addItem(menuItem)}>Add to order</button>
-    </div>
-  );
-};
+    <>
+      <header className='bg-teal-500 text-white text-center py-20 font-bold'>
+        <h1 className='text-2xl md:text-4xl lg:text-5xl uppercase'>
+          Sistema de Gestión de Pedidos
+        </h1>
+      </header>
 
-export default MenuItemComponent;
+      <main className='max-w-full mx-auto py-20 px-10 grid md:grid-cols-2'>
+        {/* Menu */}
+        <div className='flex flex-col'>
+          <h2 className='text-2xl md:text-4xl lg:text-5xl text-center text-teal-500 mt-5 mb-10'>
+            Experiencia Gastronómica
+          </h2>
+          {/* Menu Items */}
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-3'>
+            {menuItems.map(item => (
+              <MenuItem key={item.id} item={item} addItem={addItem} />
+            ))}
+          </div>
+        </div>
+        {/* Orders */}
+        <div className='md:ml-5 lg:ml-10 px-5 shadow-md'>
+          <OrderSummary order={order} removeItem={removeItem} />
+          {order.length ? (
+            <>
+              <TipPercentageForm tip={tip} setTip={setTip} />
+              <OrderTotal order={order} tip={tip} submitOrder={submitOrder} />
+            </>
+          ) : (
+            <p className='text-center pb-10 text-slate-400 font-bold'>
+              El pedido está vacío. ¡Añade artículos para continuar!
+            </p>
+          )}
+        </div>
+      </main>
+    </>
+  );
+}
+
+export default App;
 ```
 
 ## Usage
