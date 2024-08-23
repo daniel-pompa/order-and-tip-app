@@ -1,16 +1,15 @@
 import { menuItems } from './data/items';
-import { MenuItem } from './components/MenuItem';
+import { MenuItem, OrderSummary, OrderTotal, TipPercentageForm } from './components';
 import { useOrder } from './hooks/useOrder';
-import { OrderSummary } from './components/OrderSummary';
 
 function App() {
-  const { order, addItem, removeItem } = useOrder();
+  const { order, addItem, removeItem, tip, setTip } = useOrder();
 
   return (
     <>
       <header className='bg-teal-500 text-white text-center py-20 font-bold'>
         <h1 className='text-2xl md:text-4xl lg:text-5xl uppercase'>
-          Calculadora de Pedidos y Propinas
+          Sistema de Gestión de Pedidos
         </h1>
       </header>
 
@@ -27,10 +26,15 @@ function App() {
             ))}
           </div>
         </div>
-
         {/* Orders */}
         <div className='md:ml-5 lg:ml-10 px-5 shadow-md'>
           <OrderSummary order={order} removeItem={removeItem} />
+          {order.length === 0 ? null : (
+            <>
+              <TipPercentageForm setTip={setTip} />
+              <OrderTotal order={order} tip={tip} />
+            </>
+          )}
         </div>
       </main>
     </>
