@@ -1,6 +1,6 @@
 # Order and Tip App
 
-Order and Tip App is a application designed to streamline restaurant ordering and tip calculation. It allows users to manage their menu selections, calculate the total cost including the tip, and view the final amount due. This app enhances the dining experience by simplifying the ordering process and ensuring accurate tip calculations.
+Order and Tip is a application designed to streamline restaurant ordering and tip calculation. It allows users to manage their menu selections, calculate the total cost including the tip, and view the final amount due. This app enhances the dining experience by simplifying the ordering process and ensuring accurate tip calculations.
 
 ## Table of Contents
 
@@ -109,7 +109,6 @@ npm run dev
 
 ## Hooks
 
-<!-- TODO: Update description, and example -->
 `useOrder` is a custom Hook designed to manage an order list in a restaurant. It allows you to add items to an order, update the quantity of existing items, and manage the state of the order, including handling tips and submitting the order.
 
 ### Features
@@ -243,7 +242,9 @@ Once the application is running, you can:
 
 ## Demo
 
-<!-- TODO: Add link to application deployed in Vercel or Netlify -->
+Explore the live demo of the application at the following link: [View Order Management System Demo](https://order-and-tip-app.vercel.app/)
+
+Discover the features live and see the app in action!
 
 ## Contributing
 
