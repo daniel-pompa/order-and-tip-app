@@ -24,10 +24,11 @@ const tipOptions = [
 ];
 
 type TipPercentageFormProps = {
+  tip: number;
   setTip: Dispatch<SetStateAction<number>>;
 };
 
-export const TipPercentageForm = ({ setTip }: TipPercentageFormProps) => {
+export const TipPercentageForm = ({ tip, setTip }: TipPercentageFormProps) => {
   return (
     <div className='space-y-3 my-5'>
       <h2>Propina</h2>
@@ -40,6 +41,7 @@ export const TipPercentageForm = ({ setTip }: TipPercentageFormProps) => {
               name='tip'
               value={option.value}
               onChange={() => setTip(option.value)}
+              checked={tip === option.value}
             />
             <label htmlFor={option.id}>{option.label}</label>
           </div>

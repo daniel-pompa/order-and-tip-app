@@ -3,7 +3,7 @@ import { MenuItem, OrderSummary, OrderTotal, TipPercentageForm } from './compone
 import { useOrder } from './hooks/useOrder';
 
 function App() {
-  const { order, addItem, removeItem, tip, setTip } = useOrder();
+  const { order, tip, setTip, addItem, removeItem, submitOrder } = useOrder();
 
   return (
     <>
@@ -29,11 +29,15 @@ function App() {
         {/* Orders */}
         <div className='md:ml-5 lg:ml-10 px-5 shadow-md'>
           <OrderSummary order={order} removeItem={removeItem} />
-          {order.length === 0 ? null : (
+          {order.length ? (
             <>
-              <TipPercentageForm setTip={setTip} />
-              <OrderTotal order={order} tip={tip} />
+              <TipPercentageForm tip={tip} setTip={setTip} />
+              <OrderTotal order={order} tip={tip} submitOrder={submitOrder} />
             </>
+          ) : (
+            <p className='text-center pb-10 text-slate-400 font-bold'>
+              El pedido está vacío. ¡Añade artículos para continuar!
+            </p>
           )}
         </div>
       </main>

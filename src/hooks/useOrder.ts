@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { MenuItemType, OrderItemType } from '../types';
 
 export const useOrder = () => {
@@ -24,11 +24,21 @@ export const useOrder = () => {
     setOrder(order.filter(orderItem => orderItem.id !== id));
   };
 
+  const submitOrder = () => {
+    setOrder([]);
+    setTip(0);
+  };
+
+  useEffect(() => {
+    if (order.length === 0) setTip(0);
+  }, [order]);
+
   return {
     order,
     tip,
     setTip,
     addItem,
     removeItem,
+    submitOrder,
   };
 };
