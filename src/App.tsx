@@ -4,7 +4,7 @@ import { useOrder } from './hooks/useOrder';
 import { OrderSummary } from './components/OrderSummary';
 
 function App() {
-  const { order, addItem } = useOrder();
+  const { order, addItem, removeItem } = useOrder();
 
   return (
     <>
@@ -30,7 +30,7 @@ function App() {
 
         {/* Orders */}
         <div className='md:ml-5 lg:ml-10 px-5 shadow-md'>
-          <OrderSummary order={order} />
+          <OrderSummary order={order} removeItem={removeItem} />
         </div>
       </main>
     </>

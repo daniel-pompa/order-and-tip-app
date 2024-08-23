@@ -19,8 +19,13 @@ export const useOrder = () => {
     }
   };
 
+  const removeItem = (id: MenuItemType['id']) => {
+    setOrder(order.filter(orderItem => orderItem.id !== id));
+  };
+
   return {
     order,
     addItem,
+    removeItem,
   };
 };
