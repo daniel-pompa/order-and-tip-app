@@ -242,7 +242,7 @@ Once the application is running, you can:
 
 ## Demo
 
-Explore the live demo of the application at the following link: [View Order Management System Demo](https://order-and-tip-app.vercel.app/)
+Explore the live demo of the application at the following link: [Order Management System](https://order-management-react.vercel.app/)
 
 Discover the features live and see the app in action!
 
